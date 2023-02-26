@@ -24,11 +24,11 @@ export class User {
   readonly password: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  readonly createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  readonly updatedAt: Date;
 
   @DeleteDateColumn({ default: null })
-  deletedAt: Date | null;
+  readonly deletedAt: Date | null;
 }

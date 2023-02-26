@@ -4,6 +4,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -12,17 +13,27 @@ import { User } from './user.entity';
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
 
   private async getUserInfo(userId: string): Promise<User> {
-    return this.userRepository.findOne({
+    return await this.userRepository.findOne({
       select: ['name'],
       where: { userId, deletedAt: null },
     });
   }
 
-  async login(userId: string, password: string): Promise<void> {
-    const user = await this.userRepository.findOne({ where: { userId } });
+  private async jwtSign(id: number): Promise<string> {
+    const payload = { id };
+    const accessToken = await this.jwtService.signAsync(payload);
+    return accessToken;
+  }
+
+  async login(userId: string, password: string): Promise<string> {
+    const user = await this.userRepository.findOne({
+      select: ['userId', 'password'],
+      where: { userId },
+    });
 
     if (!!user === false) {
       throw new NotFoundException('해당 유저가 없습니다.');
@@ -30,18 +41,27 @@ export class UserService {
     if (user.password !== password) {
       throw new UnauthorizedException('비밀번호가 틀립니다.');
     }
+
+    return this.jwtSign(user.id);
   }
 
   async createUser(
     userId: string,
     name: string,
     password: string,
-  ): Promise<void> {
+  ): Promise<string> {
     const exisUser: User = await this.getUserInfo(userId);
     if (!!exisUser === true) {
       throw new ConflictException('아이디가 이미 존재합니다.');
     }
-    this.userRepository.insert({ userId, name, password });
+    const insertResult = await this.userRepository.insert({
+      userId,
+      name,
+      password,
+    });
+
+    // TODO - insertResult 값 확인해보기
+    return this.jwtSign(insertResult.identifiers[0].id);
   }
 
   updateUser(userId: string, name: string, password: string): void {

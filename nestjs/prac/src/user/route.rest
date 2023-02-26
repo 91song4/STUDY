@@ -1,0 +1,28 @@
+# 로그인 API
+POST http://localhost:3000/user/login
+Content-Type: application/json
+
+{
+
+}
+
+###
+
+# 회원가입 API
+POST http://localhost:3000/user/signup
+Content-Type: application/json
+
+{
+
+}
+
+###
+
+# 회원정보수정 API
+PUT http://localhost:3000/user/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzc0MjU4MzQsImV4cCI6MTY3NzQyOTQzNH0.BcePuGPIxPp_jjy7UbXpY778YzEzJ-5axT7s3V5cs6k
+
+{
+
+}
