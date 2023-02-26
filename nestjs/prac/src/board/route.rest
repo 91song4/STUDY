@@ -1,0 +1,42 @@
+# 전체조회 API
+GET http://localhost:3000/board/articles
+
+###
+
+# 개별조회 API
+GET http://localhost:3000/board/articles/4
+
+###
+
+# 생성 API
+POST http://localhost:3000/board/articles
+Content-Type: application/json
+
+{
+  "author": "song4",
+  "title": "this is title2",
+  "content": "this is content2",
+  "password": "1234"
+}
+
+###
+
+# 수정 API
+PUT http://localhost:3000/board/articles/4
+Content-Type: application/json
+
+{
+  "title": "졸립다..!",
+  "content": "자고싶다..",
+  "password": "1234"
+}
+
+###
+
+# 삭제 API
+DELETE http://localhost:3000/board/articles/1
+Content-Type: application/json
+
+{
+  "password": 1234
+}

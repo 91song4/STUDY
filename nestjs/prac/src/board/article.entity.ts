@@ -10,26 +10,26 @@ import {
 @Entity({ schema: 'board', name: 'articles' })
 export class Article {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
-  id: number;
+  readonly id: number;
 
   @Column('varchar', { length: 10 })
-  author: string;
+  readonly author: string;
 
   @Column('varchar', { length: 50 })
-  title: string;
+  readonly title: string;
 
   @Column('varchar', { length: 1000 })
-  content: string;
+  readonly content: string;
 
   @Column('varchar', { select: false })
-  password: string;
+  readonly password: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  readonly createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  readonly updatedAt: Date;
 
   @DeleteDateColumn({ default: null })
-  deletedAt: Date | null;
+  readonly deletedAt: Date | null;
 }
