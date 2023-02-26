@@ -26,8 +26,11 @@
     "@nestjs/mapped-types": "^1.2.2",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
+<<<<<<< HEAD
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+=======
+>>>>>>> ee1ae5b09e4b7cc10e9937c3ef86b097aeb5579e
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",

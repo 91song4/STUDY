@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Body,
   Controller,
@@ -58,4 +59,11 @@ export class BoardController {
   ): Promise<void> {
     await this.boardService.deleteArticle(articleId, password);
   }
+=======
+import { Controller } from '@nestjs/common';
+
+@Controller('board')
+export class BoardController {
+
+>>>>>>> ee1ae5b09e4b7cc10e9937c3ef86b097aeb5579e
 }
