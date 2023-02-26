@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {
   Injectable,
   NotFoundException,
@@ -72,9 +71,3 @@ export class BoardService {
     }
   }
 }
-=======
-import { Injectable } from '@nestjs/common';
-
-@Injectable()
-export class BoardService {}
->>>>>>> ee1ae5b09e4b7cc10e9937c3ef86b097aeb5579e
