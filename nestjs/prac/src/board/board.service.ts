@@ -5,6 +5,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { SkipThrottle, Throttle } from '@nestjs/throttler';
 import { Cache } from 'cache-manager';
 // import { InjectRepository } from '@nestjs/typeorm';
 // import { Repository } from 'typeorm';
@@ -20,6 +21,7 @@ export class BoardService {
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
+  @SkipThrottle() // rate limit ignore
   async getArticles(): Promise<Article[]> {
     const cacheArticles: Article[] = await this.cacheManager.get('articles');
 
@@ -36,6 +38,7 @@ export class BoardService {
     return articles;
   }
 
+  @Throttle(5, 60) // rate limit 직접설정
   async getArticleById(id: number): Promise<Article> {
     return await this.articleRepository.findOne({
       select: ['author', 'title', 'content', 'createdAt', 'updatedAt'],
