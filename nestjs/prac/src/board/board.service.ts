@@ -1,8 +1,11 @@
 import {
+  CACHE_MANAGER,
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Cache } from 'cache-manager';
 // import { InjectRepository } from '@nestjs/typeorm';
 // import { Repository } from 'typeorm';
 import { Article } from './article.entity';
@@ -14,13 +17,23 @@ export class BoardService {
     // @InjectRepository(Article)
     // private readonly boardRepository: Repository<Article>,
     private readonly articleRepository: ArticleRepository,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   async getArticles(): Promise<Article[]> {
-    return await this.articleRepository.find({
+    const cacheArticles: Article[] = await this.cacheManager.get('articles');
+
+    if (!!cacheArticles === true) {
+      return cacheArticles;
+    }
+
+    const articles = await this.articleRepository.find({
       select: ['id', 'title', 'createdAt'],
       where: { deletedAt: null },
     });
+
+    this.cacheManager.set('articles', articles);
+    return articles;
   }
 
   async getArticleById(id: number): Promise<Article> {

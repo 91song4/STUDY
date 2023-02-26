@@ -4,6 +4,7 @@ import {
   Module,
   RequestMethod,
   NestModule,
+  CacheModule,
 } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -27,6 +28,11 @@ import { AuthMiddleware } from './auth/auth.middleware';
       // imports: [ConfigModule],
       useClass: JwtConfigService,
       // inject: [ConfigService],
+    }),
+    CacheModule.register({
+      ttl: 60000, // 데이터 캐싱 시간 (밀리 초 단위, 1000 = 1초)
+      max: 100, // 최대 캐싱 개수
+      isGlobal: true,
     }),
     BoardModule,
     UserModule,
