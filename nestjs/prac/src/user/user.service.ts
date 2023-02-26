@@ -60,7 +60,6 @@ export class UserService {
       password,
     });
 
-    // TODO - insertResult 값 확인해보기
     return this.jwtSign(insertResult.identifiers[0].id);
   }
 

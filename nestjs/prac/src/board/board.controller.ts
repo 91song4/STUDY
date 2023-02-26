@@ -30,6 +30,11 @@ export class BoardController {
     return await this.boardService.getArticleById(articleId);
   }
 
+  @Get('/hot-articles')
+  async getHotArticles(){
+    return await this.boardService.getHotArticles();
+  }
+  
   @Post('/articles')
   createArticle(
     @Body() { author, title, content, password }: CreateArticleDto,

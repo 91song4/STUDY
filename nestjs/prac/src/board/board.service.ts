@@ -3,29 +3,35 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+// import { InjectRepository } from '@nestjs/typeorm';
+// import { Repository } from 'typeorm';
 import { Article } from './article.entity';
+import { ArticleRepository } from './article.repository';
 
 @Injectable()
 export class BoardService {
   constructor(
-    @InjectRepository(Article)
-    private readonly boardRepository: Repository<Article>,
+    // @InjectRepository(Article)
+    // private readonly boardRepository: Repository<Article>,
+    private readonly articleRepository: ArticleRepository,
   ) {}
 
   async getArticles(): Promise<Article[]> {
-    return await this.boardRepository.find({
+    return await this.articleRepository.find({
       select: ['id', 'title', 'createdAt'],
       where: { deletedAt: null },
     });
   }
 
   async getArticleById(id: number): Promise<Article> {
-    return await this.boardRepository.findOne({
+    return await this.articleRepository.findOne({
       select: ['author', 'title', 'content', 'createdAt', 'updatedAt'],
       where: { id, deletedAt: null },
     });
+  }
+
+  async getHotArticles() {
+    return await this.articleRepository.getArticlesByViewCount();
   }
 
   // TODO - bcrypt 적용
@@ -35,7 +41,7 @@ export class BoardService {
     content: string,
     password: string,
   ): void {
-    this.boardRepository.insert({ author, title, content, password });
+    this.articleRepository.insert({ author, title, content, password });
   }
 
   async updateArticle(
@@ -47,17 +53,17 @@ export class BoardService {
   ): Promise<void> {
     await this.verifyPassword(id, password);
 
-    this.boardRepository.update(id, { author, title, content });
+    this.articleRepository.update(id, { author, title, content });
   }
 
   async deleteArticle(id: number, password: string): Promise<void> {
     await this.verifyPassword(id, password);
 
-    this.boardRepository.softDelete(id);
+    this.articleRepository.softDelete(id);
   }
 
   private async verifyPassword(id: number, password: string): Promise<void> {
-    const article = await this.boardRepository.findOne({
+    const article = await this.articleRepository.findOne({
       select: ['password'],
       where: { id, deletedAt: null },
     });

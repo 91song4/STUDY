@@ -20,7 +20,6 @@ export class AuthMiddleware implements NestMiddleware {
     const token: string = authHeader.split(' ')[1];
     try {
       const payload = await this.jwtService.verify(token);
-      // TODO - req, res, authHeader, payload 확인해보기
       req.user = payload;
       next();
     } catch (error) {

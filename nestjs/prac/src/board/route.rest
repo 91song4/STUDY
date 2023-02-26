@@ -8,6 +8,11 @@ GET http://localhost:3000/board/articles/4
 
 ###
 
+# 인기순조회 API
+GET http://localhost:3000/board/hot-articles
+
+###
+
 # 생성 API
 POST http://localhost:3000/board/articles
 Content-Type: application/json

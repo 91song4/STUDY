@@ -24,6 +24,10 @@ export class Article {
   @Column('varchar', { select: false })
   readonly password: string;
 
+  // TODO - 상세조회시 +1씩 증가
+  @Column('int', { default: 0 })
+  view: number;
+
   @CreateDateColumn()
   readonly createdAt: Date;
 
