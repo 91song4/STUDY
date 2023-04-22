@@ -1,5 +1,5 @@
 export class Stack {
-  private readonly stack: number[] | string[];
+  private readonly stack: any[];
   private top: number;
 
   constructor(private readonly maxSize: number) {

@@ -1,5 +1,5 @@
 export class Queue {
-  private readonly queue: number[] | string[];
+  private readonly queue: any[];
   private front: number;
   private rear: number;
 
