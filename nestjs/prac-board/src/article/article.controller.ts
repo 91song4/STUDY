@@ -15,7 +15,10 @@ import { DeleteArticleDto } from './dto/delete-article.dto';
 import { Article } from './article.entity';
 import { ArticleService } from './article.service';
 import { SkipThrottle } from '@nestjs/throttler';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ArticleParamsDto } from './dto/article-params.dto';
 
+@ApiTags('Articles')
 @Controller('articles')
 export class ArticleController {
   // 서비스 주입
@@ -35,13 +38,20 @@ export class ArticleController {
     return await this.articleService.getHotArticles();
   }
 
-  // 게시물 상세보기 -> 게시물 ID로 확인
+  /**
+   * 게시물 상세보기
+   */
   @Get(':id')
-  async getArticleByID(@Param('id') id: number): Promise<Article> | null {
+  async getArticleByID(
+    @Param() { id }: ArticleParamsDto,
+  ): Promise<Article> | null {
     return await this.articleService.getArticleByID(id, false);
   }
 
-  // 게시물 작성
+  /**
+   * 게시물 작성
+   */
+  @ApiBearerAuth()
   @Post()
   createArticle(@Body() createArticleDto: CreateArticleDto): void {
     return this.articleService.createArticle(createArticleDto);

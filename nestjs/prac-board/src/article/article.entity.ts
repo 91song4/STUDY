@@ -24,7 +24,7 @@ export class Article {
   @Column({ type: 'varchar', select: false })
   password: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', default: 0 })
   view: number;
 
   @CreateDateColumn()

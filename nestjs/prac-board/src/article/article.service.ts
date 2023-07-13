@@ -83,20 +83,13 @@ export class ArticleService {
     });
   }
 
-  createArticle({
-    author,
-    title,
-    content,
-    view,
-    password,
-  }: CreateArticleDto): void {
+  createArticle({ author, title, content, password }: CreateArticleDto): void {
     const hashedPassword = this.bcryptService.hashSync(password);
 
     this.articleRepository.insert({
       author,
       title,
       content,
-      view,
       password: hashedPassword,
     });
   }
