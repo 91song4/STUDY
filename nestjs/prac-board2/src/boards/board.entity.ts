@@ -7,13 +7,24 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export enum BoardStatus {
+  PUBLIC = 'PUBLIC',
+  PRIVATE = 'PRIVATE',
+}
+
 @Entity({ schema: 'prac_boards', name: 'boards' })
-export class Boards {
+export class Board {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, name: 'id' })
   id: number;
 
-  @Column()
-  column: string;
+  @Column({ type: 'varchar' })
+  title: string;
+
+  @Column({ type: 'varchar' })
+  description: string;
+
+  @Column({ type: 'varchar', default: BoardStatus.PUBLIC })
+  status: BoardStatus;
 
   @CreateDateColumn()
   createdAt: Date;
