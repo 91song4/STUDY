@@ -1,0 +1,53 @@
+# 게시물 전체 조회 API
+GET http://localhost:3000/articles
+
+###
+
+# 인기 게시글 정렬 보기 API
+GET http://localhost:3000/articles/hot-articles
+
+###
+
+# 게시물 상세 조회 API
+GET http://localhost:3000/articles/1
+
+###
+
+# 게시물 작성 API
+
+POST http://localhost:3000/articles
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg5MTg0ODY0LCJleHAiOjE2ODkxODQ5MjR9.shNoRJ1zMNTnBiJwDWt-z1RoyXqWYoSG0UHLtJErnkU
+
+{
+  "author": "song3",
+  "title": "this is title",
+  "content": "this is content",
+  "password": "1234",
+  "view": 111
+}
+
+###
+
+# 게시물 수정 API
+
+PUT http://localhost:3000/articles/1
+Content-Type: application/json
+Authorization: bearer 
+
+{
+  "author": "song0_up",
+  "title": "this is update title",
+  "content": "this is update content",
+  "password": "1234"
+}
+
+###
+
+DELETE http://localhost:3000/articles/1
+Content-Type: application/json
+Authorization: bearer 
+
+{
+  "password": "1234"
+}

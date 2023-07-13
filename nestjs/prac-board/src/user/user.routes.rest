@@ -1,0 +1,44 @@
+# 로그인 API
+POST http://localhost:3000/users/log-in
+Content-Type: application/json
+
+{
+  "userId": "song4",
+  "password": "1234"
+}
+
+###
+
+# 회원가입 API
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "userId": "song4",
+  "name": "song4",
+  "password": "1234"
+}
+
+###
+
+# 회원 정보 수정 API
+PUT http://localhost:3000/users/song4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg5MTY2OTAyLCJleHAiOjE2ODkxNjY5NjJ9.Ch_utQLetkp9IhK0EM0ouO6guH_6-sAYs9yxi6ik_ZY
+
+
+{
+  "userId": "song4",
+  "name": "song4_up",
+  "password": "1234"
+}
+
+###
+
+# 회원 탈퇴 API
+DELETE http://localhost:3000/users/song3
+Content-Type: application/json
+
+{
+  "password": "1234"
+}
