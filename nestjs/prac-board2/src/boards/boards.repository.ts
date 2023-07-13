@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { Board } from './board.entity';
+import { CreateBoardDTO } from './dto/create-board.dto';
 
 @Injectable()
 export class BoardsRepository extends Repository<Board> {
@@ -8,11 +9,15 @@ export class BoardsRepository extends Repository<Board> {
     super(Board, dataSource.createEntityManager());
   }
 
-  async getAllBoards(): Promise<Board[]> {
+  getAllBoards(): Promise<Board[]> {
     return this.dataSource
       .createQueryBuilder()
       .select('boards')
       .from(Board, 'boards')
       .getMany();
+  }
+
+  createBoard({ title, description }: CreateBoardDTO): void {
+    this.insert({ title, description });
   }
 }
