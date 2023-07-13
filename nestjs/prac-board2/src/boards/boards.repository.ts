@@ -1,10 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { Boards } from './boards.entity';
+import { Board } from './board.entity';
 
 @Injectable()
-export class BoardsRepository extends Repository<Boards> {
+export class BoardsRepository extends Repository<Board> {
   constructor(private readonly dataSource: DataSource) {
-    super(Boards, dataSource.createEntityManager());
+    super(Board, dataSource.createEntityManager());
+  }
+
+  async getAllBoards(): Promise<Board[]> {
+    return this.dataSource
+      .createQueryBuilder()
+      .select('boards')
+      .from(Board, 'boards')
+      .getMany();
   }
 }
