@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from './board.entity';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateBoardDTO } from './dto/create-board.dto';
 
 @ApiTags('boards')
@@ -21,6 +21,9 @@ export class BoardsController {
     }
   }
 
+  /**
+   * 게시글 작성
+   */
   @Post()
   async createBoard(@Body() createBoardDTO: CreateBoardDTO) {
     try {
