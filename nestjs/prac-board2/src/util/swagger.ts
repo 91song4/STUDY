@@ -6,9 +6,10 @@ export function setupSwagger(app: INestApplication): void {
     .setTitle('prac board'.toUpperCase())
     .setDescription('게시판 프로젝트 연습')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
 
-  SwaggerModule.setup('song4', app, document);
+  SwaggerModule.setup('api', app, document);
 }
