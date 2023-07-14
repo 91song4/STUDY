@@ -12,7 +12,12 @@ export class BoardsRepository extends Repository<Board> {
   }
 
   getAllBoards(): Promise<Board[]> {
-    return this.find();
+    return this.dataSource
+      .createQueryBuilder()
+      .select('board')
+      .from(Board, 'board')
+      .orderBy('board.id', 'DESC')
+      .getMany();
   }
 
   getBoardById({ id }: BoardParamsDTO): Promise<Board> | null {
