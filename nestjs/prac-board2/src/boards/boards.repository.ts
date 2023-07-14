@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, InsertResult, Repository, UpdateResult } from 'typeorm';
 import { Board } from './board.entity';
 import { CreateBoardDTO } from './dto/create-board.dto';
+import { BoardParamsDTO } from './dto/board-params.dto';
+import { UpdateBoardDTO } from './dto/update-board.dto';
 
 @Injectable()
 export class BoardsRepository extends Repository<Board> {
@@ -10,14 +12,25 @@ export class BoardsRepository extends Repository<Board> {
   }
 
   getAllBoards(): Promise<Board[]> {
-    return this.dataSource
-      .createQueryBuilder()
-      .select('boards')
-      .from(Board, 'boards')
-      .getMany();
+    return this.find();
   }
 
-  createBoard({ title, description }: CreateBoardDTO): void {
-    this.insert({ title, description });
+  getBoardById({ id }: BoardParamsDTO): Promise<Board> | null {
+    return this.findOneBy({ id });
+  }
+
+  createBoard({ title, description }: CreateBoardDTO): Promise<InsertResult> {
+    return this.insert({ title, description });
+  }
+
+  updateBoard(
+    { id }: BoardParamsDTO,
+    updateBoardDTO: UpdateBoardDTO,
+  ): Promise<UpdateResult> {
+    return this.update(id, { ...updateBoardDTO });
+  }
+
+  deleteBoard({ id }: BoardParamsDTO): Promise<UpdateResult> {
+    return this.softDelete(id);
   }
 }
