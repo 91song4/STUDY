@@ -59,6 +59,6 @@ export class BoardsController {
    */
   @Delete(':id')
   deleteBoard(@Param() boardParamsDTO: BoardParamsDTO): void {
-    this.deleteBoard(boardParamsDTO);
+    this.boardsService.deleteBoard(boardParamsDTO);
   }
 }

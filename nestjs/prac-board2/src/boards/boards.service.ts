@@ -54,6 +54,6 @@ export class BoardsService {
       throw new NotFoundException('게시글이 존재하지 않습니다!');
     }
 
-    await this.deleteBoard(boardParamsDTO);
+    await this.boardsRepository.deleteBoard(boardParamsDTO);
   }
 }
