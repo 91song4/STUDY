@@ -12,7 +12,8 @@ export enum BoardStatus {
   PRIVATE = 'PRIVATE',
 }
 
-@Entity({ schema: 'prac_boards', name: 'boards' })
+// @Entity({ schema: 'prac_boards', name: 'boards' })
+@Entity()
 export class Board {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, name: 'id' })
   id: number;
