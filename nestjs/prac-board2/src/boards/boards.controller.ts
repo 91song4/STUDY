@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from './board.entity';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateBoardDTO } from './dto/create-board.dto';
 import { BoardParamsDTO } from './dto/board-params.dto';
 import { UpdateBoardDTO } from './dto/update-board.dto';
@@ -50,15 +50,15 @@ export class BoardsController {
   updateBoard(
     @Param() boardParamsDTO: BoardParamsDTO,
     @Body() updateBoardDTO: UpdateBoardDTO,
-  ): void {
-    this.boardsService.updateBoard(boardParamsDTO, updateBoardDTO);
+  ): Promise<void> {
+    return this.boardsService.updateBoard(boardParamsDTO, updateBoardDTO);
   }
 
   /**
    * 게시글 ID로 게시글 삭제
    */
   @Delete(':id')
-  deleteBoard(@Param() boardParamsDTO: BoardParamsDTO): void {
-    this.boardsService.deleteBoard(boardParamsDTO);
+  deleteBoard(@Param() boardParamsDTO: BoardParamsDTO): Promise<void> {
+    return this.boardsService.deleteBoard(boardParamsDTO);
   }
 }

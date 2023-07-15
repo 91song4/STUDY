@@ -4,7 +4,7 @@ import { Board } from './board.entity';
 import { CreateBoardDTO } from './dto/create-board.dto';
 import { BoardParamsDTO } from './dto/board-params.dto';
 import { UpdateBoardDTO } from './dto/update-board.dto';
-import { InsertResult } from 'typeorm';
+import { InsertResult, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class BoardsService {
@@ -48,12 +48,11 @@ export class BoardsService {
   }
 
   async deleteBoard(boardParamsDTO: BoardParamsDTO): Promise<void> {
-    const board = await this.getBoardById(boardParamsDTO);
+    const { affected: isDeleted }: UpdateResult =
+      await this.boardsRepository.deleteBoard(boardParamsDTO);
 
-    if (!board) {
+    if (!isDeleted) {
       throw new NotFoundException('게시글이 존재하지 않습니다!');
     }
-
-    await this.boardsRepository.deleteBoard(boardParamsDTO);
   }
 }

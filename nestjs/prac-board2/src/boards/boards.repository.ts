@@ -36,6 +36,11 @@ export class BoardsRepository extends Repository<Board> {
   }
 
   deleteBoard({ id }: BoardParamsDTO): Promise<UpdateResult> {
-    return this.softDelete(id);
+    return this.dataSource
+      .createQueryBuilder()
+      .softDelete()
+      .from(Board)
+      .where('boards.id = :id and deletedAt = NULL', { id })
+      .execute();
   }
 }
