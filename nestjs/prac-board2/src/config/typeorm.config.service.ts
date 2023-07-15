@@ -15,7 +15,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       username: this.configService.get<string>('PSQL_USERNAME'),
       password: this.configService.get<string>('PSQLE_PASSWORD'),
       database: this.configService.get<string>('PSQL_NAME'),
-      entities: [Board],
+      entities: [__dirname + '/../**/*.entity.{js,ts}'],
       logging: false,
       synchronize: true,
     };
