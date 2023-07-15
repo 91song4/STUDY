@@ -1,5 +1,6 @@
 import { IsString } from 'class-validator';
 import { BoardStatus } from '../board.entity';
+import { IsBoardStatus } from '../decorators/isBoardStatus';
 
 export class UpdateBoardDTO {
   /**
@@ -20,5 +21,6 @@ export class UpdateBoardDTO {
    * 상태
    * @example "PRIVATE"
    */
+  @IsBoardStatus({ message: 'PUBLIC 또는 PRIVATE를 선택하세요.' })
   status?: BoardStatus;
 }
