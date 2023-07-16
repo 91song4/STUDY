@@ -32,7 +32,12 @@ export class BoardsRepository extends Repository<Board> {
     { id }: BoardParamsDTO,
     updateBoardDTO: UpdateBoardDTO,
   ): Promise<UpdateResult> {
-    return this.update(id, { ...updateBoardDTO });
+    return this.dataSource
+      .createQueryBuilder()
+      .update(Board)
+      .set(updateBoardDTO)
+      .where('id = :id and "deletedAt" is null', { id })
+      .execute();
   }
 
   deleteBoard({ id }: BoardParamsDTO): Promise<UpdateResult> {
@@ -40,7 +45,7 @@ export class BoardsRepository extends Repository<Board> {
       .createQueryBuilder()
       .softDelete()
       .from(Board)
-      .where('boards.id = :id and deletedAt = NULL', { id })
+      .where('boards.id = :id and "deletedAt" is null', { id })
       .execute();
   }
 }

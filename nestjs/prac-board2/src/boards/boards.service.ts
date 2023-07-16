@@ -38,20 +38,26 @@ export class BoardsService {
     boardParamsDTO: BoardParamsDTO,
     updateBoardDTO: UpdateBoardDTO,
   ): Promise<void> {
-    const board: Board = await this.getBoardById(boardParamsDTO);
+    const result: UpdateResult = await this.boardsRepository.updateBoard(
+      boardParamsDTO,
+      updateBoardDTO,
+    );
 
-    if (!board) {
-      throw new NotFoundException('게시글이 존재하지 않습니다!');
-    }
-
-    await this.boardsRepository.updateBoard(boardParamsDTO, updateBoardDTO);
+    this.validateAction(result);
   }
 
   async deleteBoard(boardParamsDTO: BoardParamsDTO): Promise<void> {
-    const { affected: isDeleted }: UpdateResult =
-      await this.boardsRepository.deleteBoard(boardParamsDTO);
+    const result: UpdateResult = await this.boardsRepository.deleteBoard(
+      boardParamsDTO,
+    );
 
-    if (!isDeleted) {
+    this.validateAction(result);
+  }
+
+  private validateAction(result: UpdateResult) {
+    const isSuccessful: boolean = !!result.affected;
+
+    if (!isSuccessful) {
       throw new NotFoundException('게시글이 존재하지 않습니다!');
     }
   }
